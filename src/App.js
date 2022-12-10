@@ -1,4 +1,4 @@
-import "./App.css";
+import "./index.css";
 import { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import SCA from "./artifacts/contracts/SCA.sol/SCA.json";
@@ -214,47 +214,47 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="flex flex-col justify-center text-center bg-custom-background">
       {ipfs && (
         <>
-          <h3 class="text-3xl font-bold dark:text-white">
+          <h3 className="text-3xl font-bold text-custom-primary">
             IPFS Supply Chain Assurance
           </h3>
-          <div class="flex items-start mb-6"> </div>
+          <div className="flex items-start mb-6"> </div>
 
           {role === "Supplier" && (
-            <h1 className="text-xl font-semibold text-gray-700 text-center">
+            <h1 className="text-xl font-semibold text-gray-900 text-center">
               1. Carrier registration
             </h1>
           )}
 
-          <div class="grid mb-2 md:grid-cols-3">
+          <div className="grid mb-2 md:grid-cols-3">
             <div> </div>
             <div>
               {role === "Supplier" && (
                 <div>
                   <label
                     for="last_name"
-                    class="block mb-4 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    className="block mb-4 text-sm font-medium text-gray-900 "
                   >
                     Add carrier
                   </label>
 
                   <input
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5  "
                     onChange={(e) => setCarrier(e.target.value)}
                     placeholder="Add Carrier"
                     required
                   />
 
-                  <div class="flex items-start mb-6"></div>
+                  <div className="flex items-start mb-6"></div>
                   <p>{regok}</p>
                 </div>
               )}
 
               {role === "Supplier" && (
                 <button
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-custom-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   onClick={registerCarrierCust}
                 >
                   {" "}
@@ -265,7 +265,7 @@ function App() {
             </div>
           </div>
 
-          <div class="flex items-start mb-6"></div>
+          <div className="flex items-start mb-6"></div>
 
           {role === "Supplier" && (
             <h1 className="text-xl font-semibold text-gray-700 text-center">
@@ -273,13 +273,15 @@ function App() {
             </h1>
           )}
 
-          {role === "Supplier" && <div class="flex items-start mb-6"> </div>}
+          {role === "Supplier" && (
+            <div className="flex items-start mb-6"> </div>
+          )}
           {role === "Supplier" && (
             <form onSubmit={onSubmitHandler}>
-              <div class="flex justify-center">
-                <div class="mb-3 w-96">
+              <div className="flex justify-center">
+                <div className="mb-3 w-96">
                   <input
-                    class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     type="file"
                     id="file"
                   />
@@ -287,7 +289,7 @@ function App() {
               </div>
 
               <button
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 type="submit"
               >
                 Upload file
@@ -298,12 +300,12 @@ function App() {
       )}
 
       {role === "Supplier" && (
-        <div class="flex flex-wrap justify-center">
+        <div className="flex flex-wrap justify-center">
           {images.map((image, index) => (
             <img
               alt={`Uploaded #${index + 1}`}
               src={"https://skywalker.infura-ipfs.io/ipfs/" + image.path}
-              class="p-1 bg-white border rounded max-w-sm"
+              className="p-1 bg-white border rounded max-w-sm"
               style={{ maxWidth: "400px", margin: "15px" }}
               key={image.cid.toString() + index}
             />
@@ -333,11 +335,11 @@ function App() {
             placeholder="Message"
           />
 
-          <div class="flex items-start mb-6"> </div>
+          <div className="flex items-start mb-6"> </div>
 
           <button
             type="submit"
-            class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+            className="bg-primary hover:opacity-50  text-white font-bold py-2 px-4 border-b-4 "
           >
             Sign message
           </button>
@@ -345,14 +347,14 @@ function App() {
         </form>
       )}
 
-      <div class="grid grid-cols-3 gap-4" />
-      <div class="flex items-start mb-6"></div>
+      <div className="grid grid-cols-3 gap-4" />
+      <div className="flex items-start mb-6"></div>
 
       <br></br>
 
       <br></br>
 
-      <div class="flex items-start mb-6"> </div>
+      <div className="flex items-start mb-6"> </div>
 
       <div className="hashing-form">
         {role === "Supplier" && (
@@ -374,19 +376,19 @@ function App() {
         )}
 
         <div>
-          <div class="flex items-start mb-6"></div>
+          <div className="flex items-start mb-6"></div>
         </div>
-        <div class="grid mb-2 md:grid-cols-3">
+        <div className="grid mb-2 md:grid-cols-3">
           <div> </div>
           <div>
             <label
               for="first_name"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              className="block mb-2 text-sm font-medium text-gray-900 "
             >
               Download photo
             </label>
             <input
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5"
               onChange={(e) => setBiddoc(e.target.value)}
               placeholder="Input CID"
               required
@@ -395,7 +397,7 @@ function App() {
           <div> </div>
           <div> </div>
           {biddoc && (
-            <div class="flex flex-wrap justify-center">
+            <div className="flex flex-wrap justify-center">
               <img
                 alt="Bidding document"
                 src={"https://skywalker.infura-ipfs.io/ipfs/" + biddoc}
@@ -434,7 +436,7 @@ function App() {
               <footer className="p-4">
                 <button
                   type="submit"
-                  class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+                  className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
                 >
                   Verify
                 </button>
