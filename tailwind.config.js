@@ -18,9 +18,15 @@ module.exports = {
       },
       colors: {
         custom: {
-          background: "8fb996",
-          primary: "#beffc7",
-          secondary: "#a7c4b5",
+          primary: "#02c39a",
+          secondary: "#00a896",
+          danger: "#d84654",
+          alert: "#f99c39",
+          back: "#a7c4b5",
+          success: "#4f9d69",
+          light: "#cbf3f0",
+          dark: "#028090",
+          darker: "#05668d",
         },
       },
       fontSize: {

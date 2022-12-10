@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import SCA from "./artifacts/contracts/SCA.sol/SCA.json";
 import { create as ipfsHttpClient } from "ipfs-http-client";
+import Button from "./components/atoms/Button";
+import Input from "./components/atoms/Input";
 
 // Update with the contract address after deploying the smart contract
 // const scaAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
@@ -117,6 +119,7 @@ function App() {
 
   //Carrier's registration
   async function registerCarrierCust() {
+    console.log("register carreier", carrier);
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -217,7 +220,7 @@ function App() {
     <div className="flex flex-col justify-center text-center bg-custom-background">
       {ipfs && (
         <>
-          <h3 className="text-3xl font-bold text-custom-primary">
+          <h3 className="text-3xl font-bold text-custom-back">
             IPFS Supply Chain Assurance
           </h3>
           <div className="flex items-start mb-6"> </div>
@@ -240,10 +243,10 @@ function App() {
                     Add carrier
                   </label>
 
-                  <input
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5  "
+                  <Input
+                    // className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5  "
                     onChange={(e) => setCarrier(e.target.value)}
-                    placeholder="Add Carrier"
+                    label="Add Carrier"
                     required
                   />
 
@@ -253,13 +256,7 @@ function App() {
               )}
 
               {role === "Supplier" && (
-                <button
-                  className="bg-custom-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={registerCarrierCust}
-                >
-                  {" "}
-                  Register
-                </button>
+                <Button onClick={registerCarrierCust}>Register</Button>
               )}
               <br></br>
             </div>
@@ -288,12 +285,9 @@ function App() {
                 </div>
               </div>
 
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                type="submit"
-              >
+              <Button className="bg-black" type="submit">
                 Upload file
-              </button>
+              </Button>
             </form>
           )}
         </>
@@ -337,12 +331,7 @@ function App() {
 
           <div className="flex items-start mb-6"> </div>
 
-          <button
-            type="submit"
-            className="bg-primary hover:opacity-50  text-white font-bold py-2 px-4 border-b-4 "
-          >
-            Sign message
-          </button>
+          <Button type="submit">Sign message</Button>
           {error}
         </form>
       )}
@@ -434,12 +423,7 @@ function App() {
                 </div>
               </main>
               <footer className="p-4">
-                <button
-                  type="submit"
-                  className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-                >
-                  Verify
-                </button>
+                <Button type="submit">Verify</Button>
                 {error}
               </footer>
 
