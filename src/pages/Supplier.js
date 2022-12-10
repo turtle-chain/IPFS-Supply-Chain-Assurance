@@ -76,7 +76,7 @@ const Supplier = () => {
       {ipfs && (
         <>
           <h3 className="text-3xl font-bold text-custom-back">
-            IPFS Supply Chain Assurance
+            IPFS Supply Chain Assurance Supplier
           </h3>
           <div className="flex items-start mb-6"> </div>
 
