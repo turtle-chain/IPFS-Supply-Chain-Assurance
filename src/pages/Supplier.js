@@ -2,8 +2,11 @@ import React from "react";
 import { ipfs } from "../utils/ipfs";
 import Button from "../components/atoms/Button";
 import Input from "../components/atoms/Input";
+import Card from "../components/molecules/Card";
 import { ethers } from "ethers";
 import SCA from "../artifacts/contracts/SCA.sol/SCA.json";
+import Banner from "../components/molecules/Banner";
+import Typography from "../components/atoms/Typography";
 
 const Supplier = () => {
   const [carrier, setCarrier] = React.useState([]);
@@ -11,7 +14,6 @@ const Supplier = () => {
   const [cid, setCid] = React.useState();
   let [regok, setRegok] = React.useState("");
   const [images, setImages] = React.useState([]);
-  const scaAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -38,7 +40,11 @@ const Supplier = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const contract = new ethers.Contract(scaAddress, SCA.abi, signer);
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_scaAddress,
+        SCA.abi,
+        signer
+      );
       try {
         const transaction = await contract.addcid(result.path);
         await transaction.wait();
@@ -57,7 +63,11 @@ const Supplier = () => {
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const contract = new ethers.Contract(scaAddress, SCA.abi, signer);
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_scaAddress,
+        SCA.abi,
+        signer
+      );
 
       try {
         const transaction = await contract.register(carrier);
@@ -71,140 +81,108 @@ const Supplier = () => {
     }
   }
 
+  if (!ipfs) return null;
+
   return (
-    <div className="flex flex-col justify-center text-center bg-custom-background">
-      {ipfs && (
-        <>
-          <h3 className="text-3xl font-bold text-custom-back">
-            IPFS Supply Chain Assurance Supplier
-          </h3>
-          <div className="flex items-start mb-6"> </div>
-
-          <h1 className="text-xl font-semibold text-gray-900 text-center">
-            1. Carrier registration
-          </h1>
-
-          <div className="grid mb-2 md:grid-cols-3">
-            <div> </div>
-            <div>
-              <div>
-                <label
-                  for="last_name"
-                  className="block mb-4 text-sm font-medium text-gray-900 "
-                >
-                  Add carrier
-                </label>
-
-                <Input
-                  // className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5  "
-                  onChange={(e) => setCarrier(e.target.value)}
-                  label="Add Carrier"
-                  required
-                />
-
-                <div className="flex items-start mb-6"></div>
-                <p>{regok}</p>
-              </div>
-
-              <Button onClick={registerCarrierCust}>Register</Button>
-              <br></br>
-            </div>
-          </div>
-
-          <div className="flex items-start mb-6"></div>
-
-          <h1 className="text-xl font-semibold text-gray-700 text-center">
-            2. Upload the photo of the goods to be transported
-          </h1>
-
-          <div className="flex items-start mb-6"> </div>
-          <form onSubmit={onSubmitHandler}>
-            <div className="flex justify-center">
-              <div className="mb-3 w-96">
-                <input
-                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  type="file"
-                  id="file"
-                />
-              </div>
-            </div>
-
-            <Button className="bg-black" type="submit">
-              Upload file
-            </Button>
-          </form>
-        </>
-      )}
-
-      <div className="flex flex-wrap justify-center">
-        {images.map((image, index) => (
-          <img
-            alt={`Uploaded #${index + 1}`}
-            src={"https://skywalker.infura-ipfs.io/ipfs/" + image.path}
-            className="p-1 bg-white border rounded max-w-sm"
-            style={{ maxWidth: "400px", margin: "15px" }}
-            key={image.cid.toString() + index}
-          />
-        ))}
+    <div className="flex flex-col justify-center text-center">
+      <div className="bg-custom-primary p-2  ">
+        <Typography
+          text="IPFS Supply Chain Assurance"
+          tag="h1"
+          className="text-white text-center"
+        />
       </div>
+      <Banner
+        role="Supplier"
+        text="Our platform offers suppliers the unique opportunity to register their carriers on a blockchain to ensure that all their transactions are carried out securely. Protect your assets and make sure you maintain a high level of security."
+        text2="Join the future of blockchain today and discover the ease and security our platform offers!"
+      />
 
-      {images.map((image, index) => (
-        <h3>Path:{image.path}</h3>
-      ))}
-
-      <h3>{cid}</h3>
-
-      <div className="grid grid-cols-3 gap-4" />
-      <div className="flex items-start mb-6"></div>
-
-      <br></br>
-
-      <br></br>
-
-      <div className="flex items-start mb-6"> </div>
-
-      <div className="hashing-form">
-        <h1 className="text-xl font-semibold text-gray-700 text-center">
-          3. Download photo from IPFS
-        </h1>
-
-        <div>
-          <div className="flex items-start mb-6"></div>
+      <Card className="w-1/2 self-center">
+        <Typography
+          text="1. Register the carrier by inserting his wallet adddress"
+          tag="h2"
+          className="py-4"
+        />
+        <div className="self-center w-full text-center">
+          <Input
+            onChange={(e) => setCarrier(e.target.value)}
+            label="Add Carrier's wallet address"
+            required
+            className="self-center"
+          />
+          <p>{regok}</p>
         </div>
-        <div className="grid mb-2 md:grid-cols-3">
-          <div> </div>
-          <div>
-            <label
-              for="first_name"
-              className="block mb-2 text-sm font-medium text-gray-900 "
-            >
-              Download photo
-            </label>
-            <input
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5"
-              onChange={(e) => setBiddoc(e.target.value)}
-              placeholder="Input CID"
-              required
+
+        <Button onClick={registerCarrierCust} className="w-32 self-center">
+          Register
+        </Button>
+      </Card>
+
+      <Card className="w-1/2 self-center">
+        <Typography
+          text="2. Upload the photo of the goods to be transported"
+          tag="h2"
+          className="py-4"
+        />
+
+        <form
+          onSubmit={onSubmitHandler}
+          className="flex flex-col self-center w-full"
+        >
+          <Input type="file" id="file" />
+          <Button type="submit" className=" w-32 self-center">
+            Upload file
+          </Button>
+        </form>
+
+        <div className="flex flex-wrap justify-center">
+          {images.map((image, index) => (
+            <img
+              alt={`Uploaded #${index + 1}`}
+              src={"https://skywalker.infura-ipfs.io/ipfs/" + image.path}
+              className="p-1 bg-white border rounded max-w-sm"
+              style={{ maxWidth: "400px", margin: "15px" }}
+              key={image.cid.toString() + index}
+            />
+          ))}
+        </div>
+
+        {images.map((image, index) => (
+          <h3>CID:{image.path}</h3>
+        ))}
+
+        <h3>{cid}</h3>
+      </Card>
+
+      <Card className="w-1/2 self-center mb-12">
+        <Typography
+          text="3. Download photo from IPFS by inserting the CID"
+          tag="h2"
+          className="py-4"
+        />
+
+        <Input
+          onChange={(e) => setBiddoc(e.target.value)}
+          placeholder="Insert CID"
+          required
+          className="w-4/5 self-center"
+        />
+        {biddoc && (
+          <div className="flex flex-wrap justify-center">
+            <img
+              alt="Bidding document"
+              src={"https://skywalker.infura-ipfs.io/ipfs/" + biddoc}
+              style={{ maxWidth: "400px", margin: "15px" }}
+              onError={(e) => {
+                e.target.src =
+                  "https://skywalker.infura-ipfs.io/ipfs/QmYEGHkGxNut1zGGFiW6ERNgCcV5cwmXcpZgtT2NXUtGDP"; //replacement image imported above
+                e.target.style = "padding: 8px; margin: 16px"; // inline styles in html format
+              }}
             />
           </div>
-          <div> </div>
-          <div> </div>
-          {biddoc && (
-            <div className="flex flex-wrap justify-center">
-              <img
-                alt="Bidding document"
-                src={"https://skywalker.infura-ipfs.io/ipfs/" + biddoc}
-                style={{ maxWidth: "400px", margin: "15px" }}
-                onError={(e) => {
-                  e.target.src =
-                    "https://skywalker.infura-ipfs.io/ipfs/QmYEGHkGxNut1zGGFiW6ERNgCcV5cwmXcpZgtT2NXUtGDP"; //replacement image imported above
-                  e.target.style = "padding: 8px; margin: 16px"; // inline styles in html format
-                }}
-              />
-            </div>
-          )}
-        </div>
-      </div>
+        )}
+      </Card>
     </div>
   );
 };

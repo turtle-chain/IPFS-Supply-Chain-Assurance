@@ -16,7 +16,7 @@ const Input = ({
     <div className={classNames("w-full mb-4", className)}>
       <div
         className={classNames(
-          "relative rounded-sm overflow-hidden w-full",
+          "relative rounded-sm overflow-hidden w-full flex justify-center",
           parentClassName
         )}
       >
@@ -37,7 +37,7 @@ const Input = ({
           <label
             htmlFor={label}
             className={classNames(
-              "absolute cursor-text  left-2 top-1/2 transition-all transform -translate-y-1/2 duration-500 opacity-40 font-display text-xs",
+              "absolute cursor-text left-20 top-1/2 transition-all transform -translate-y-1/2 duration-500 opacity-40 font-display text-xs",
               focused || !value === false ? "left-2 top-2 text-xxs" : ""
             )}
           >

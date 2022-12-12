@@ -14,10 +14,6 @@ import SCA from "./artifacts/contracts/SCA.sol/SCA.json";
 // insert your infura project credientals
 
 function App() {
-  const [signatures, setSignatures] = useState();
-  const [error, setError] = useState();
-  let [signedmesage, setSignedmesage] = useState("");
-  let [validcid, setValidcid] = useState("");
   let [role, setRole] = useState("");
   const scaAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
@@ -50,102 +46,7 @@ function App() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log("role", role);
-  }, [role]);
-
-  //Carrier sign message
-  const signMessage = async ({ setError, message }) => {
-    try {
-      if (!window.ethereum)
-        throw new Error("No crypto wallet found. Please install it.");
-
-      await window.ethereum.send("eth_requestAccounts");
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const signature = await signer.signMessage(message);
-      setSignedmesage(signature);
-      console.log("SIGNATURE:", signedmesage);
-      const address = await signer.getAddress();
-      console.log("ADDRESS:", address);
-      signedmesage = signature;
-
-      return {
-        message,
-        signature,
-        address,
-      };
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleSign = async (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    setError();
-    const sig = await signMessage({
-      setError,
-      message: data.get("message"),
-    });
-    if (sig) {
-      console.log("sig", sig);
-      addValues(sig);
-    }
-  };
-
-  async function addValues(sig) {
-    console.log("entra a addvalues");
-    if (typeof window.ethereum !== "undefined") {
-      await requestAccount();
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(scaAddress, SCA.abi, signer);
-      console.log(sig.signature, sig.message, sig.address);
-      const transaction = await contract.supply(sig.signature, sig.message);
-      await transaction.wait();
-    }
-  }
-
-  // request access to the user's MetaMask account
-  async function requestAccount() {
-    await window.ethereum.request({ method: "eth_requestAccounts" });
-  }
-
   // IPFS
-
-  const handleVerification = async (e) => {
-    e.preventDefault();
-
-    const data = new FormData(e.target);
-    console.log(data);
-    console.log(e.target);
-    setError();
-    const sig = await signMessage({
-      setError,
-      message: data.get("message"),
-    });
-    console.log("INPUT", data.get("message"));
-    if (sig) {
-      setSignatures(sig);
-    }
-
-    if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contract = new ethers.Contract(scaAddress, SCA.abi, provider);
-      try {
-        const data = await contract.show(sig.message, sig.signature);
-        console.log("data: ", data);
-        if (data == true) {
-          setValidcid("CID OK");
-        } else {
-          setValidcid("CID Incorrect");
-        }
-      } catch (err) {
-        console.log("Error: ", err);
-      }
-    }
-  };
 
   return (
     <>

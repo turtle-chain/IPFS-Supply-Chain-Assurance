@@ -9,7 +9,6 @@ const Carrier = () => {
   const [cid, setCid] = React.useState();
   const [error, setError] = React.useState();
   let [signedmesage, setSignedmesage] = React.useState("");
-  const scaAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
   const [biddoc, setBiddoc] = React.useState("");
   const [signatures, setSignatures] = React.useState();
   let [validcid, setValidcid] = React.useState("");
@@ -25,7 +24,11 @@ const Carrier = () => {
       await requestAccount();
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const contract = new ethers.Contract(scaAddress, SCA.abi, signer);
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_scaAddress,
+        SCA.abi,
+        signer
+      );
       console.log(sig.signature, sig.message, sig.address);
       const transaction = await contract.supply(sig.signature, sig.message);
       await transaction.wait();
@@ -88,7 +91,11 @@ const Carrier = () => {
 
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contract = new ethers.Contract(scaAddress, SCA.abi, provider);
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_scaAddress,
+        SCA.abi,
+        provider
+      );
       try {
         const data = await contract.show(sig.message, sig.signature);
         console.log("data: ", data);
