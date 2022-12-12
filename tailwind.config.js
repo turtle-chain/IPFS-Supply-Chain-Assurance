@@ -34,7 +34,7 @@ module.exports = {
         h1: ["2rem", "3rem"],
         h2: ["1.5rem", "2.0625rem"],
         h3: ["1.1rem", "1.5625rem"],
-        h4: ["0.9em", "1.125rem"],
+        h4: ["0.85em", "1.125rem"],
         h5: ["0.7rem", "1rem"],
         p: ["1rem", "1rem"],
         "10xl": ["3.375rem", "5.0625rem"],

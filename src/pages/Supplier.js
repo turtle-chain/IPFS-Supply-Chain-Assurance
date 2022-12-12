@@ -7,6 +7,7 @@ import { ethers } from "ethers";
 import SCA from "../artifacts/contracts/SCA.sol/SCA.json";
 import Banner from "../components/molecules/Banner";
 import Typography from "../components/atoms/Typography";
+import DownloadPhotoFromIPFS from "../components/organisms/DownloadPhotoFromIPFS";
 
 const Supplier = () => {
   const [carrier, setCarrier] = React.useState([]);
@@ -85,31 +86,27 @@ const Supplier = () => {
 
   return (
     <div className="flex flex-col justify-center text-center">
-      <div className="bg-custom-primary p-2  ">
-        <Typography
-          text="IPFS Supply Chain Assurance"
-          tag="h1"
-          className="text-white text-center"
-        />
-      </div>
       <Banner
         role="Supplier"
         text="Our platform offers suppliers the unique opportunity to register their carriers on a blockchain to ensure that all their transactions are carried out securely. Protect your assets and make sure you maintain a high level of security."
         text2="Join the future of blockchain today and discover the ease and security our platform offers!"
       />
-
       <Card className="w-1/2 self-center">
         <Typography
-          text="1. Register the carrier by inserting his wallet adddress"
+          text="Register the carrier by inserting his wallet adddress"
           tag="h2"
-          className="py-4"
+          className="text-left"
         />
-        <div className="self-center w-full text-center">
+        <Typography
+          text="The carrier address will be registered in the smart contract to allow him sign new photos."
+          tag="h4"
+          className="text-left"
+        />
+        <div className="self-center w-full text-center mt-4">
           <Input
             onChange={(e) => setCarrier(e.target.value)}
             label="Add Carrier's wallet address"
             required
-            className="self-center"
           />
           <p>{regok}</p>
         </div>
@@ -121,14 +118,19 @@ const Supplier = () => {
 
       <Card className="w-1/2 self-center">
         <Typography
-          text="2. Upload the photo of the goods to be transported"
+          text="Upload the photo of the goods to be transported"
           tag="h2"
-          className="py-4"
+          className="text-left"
         />
 
+        <Typography
+          text="This photo will be uploaded through IPFS to the smart contract for carrier's revision"
+          tag="h4"
+          className="text-left"
+        />
         <form
           onSubmit={onSubmitHandler}
-          className="flex flex-col self-center w-full"
+          className="flex flex-col self-center w-full mt-4"
         >
           <Input type="file" id="file" />
           <Button type="submit" className=" w-32 self-center">
@@ -156,32 +158,7 @@ const Supplier = () => {
       </Card>
 
       <Card className="w-1/2 self-center mb-12">
-        <Typography
-          text="3. Download photo from IPFS by inserting the CID"
-          tag="h2"
-          className="py-4"
-        />
-
-        <Input
-          onChange={(e) => setBiddoc(e.target.value)}
-          placeholder="Insert CID"
-          required
-          className="w-4/5 self-center"
-        />
-        {biddoc && (
-          <div className="flex flex-wrap justify-center">
-            <img
-              alt="Bidding document"
-              src={"https://skywalker.infura-ipfs.io/ipfs/" + biddoc}
-              style={{ maxWidth: "400px", margin: "15px" }}
-              onError={(e) => {
-                e.target.src =
-                  "https://skywalker.infura-ipfs.io/ipfs/QmYEGHkGxNut1zGGFiW6ERNgCcV5cwmXcpZgtT2NXUtGDP"; //replacement image imported above
-                e.target.style = "padding: 8px; margin: 16px"; // inline styles in html format
-              }}
-            />
-          </div>
-        )}
+        <DownloadPhotoFromIPFS />
       </Card>
     </div>
   );

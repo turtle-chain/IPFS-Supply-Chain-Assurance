@@ -1,8 +1,13 @@
 import React from "react";
 import Button from "../components/atoms/Button";
+import Banner from "../components/molecules/Banner";
+import Input from "../components/atoms/Input";
+import Typography from "../components/atoms/Typography";
+import Card from "../components/molecules/Card";
 import { ipfs } from "../utils/ipfs";
 import { ethers } from "ethers";
 import SCA from "../artifacts/contracts/SCA.sol/SCA.json";
+import DownloadPhotoFromIPFS from "../components/organisms/DownloadPhotoFromIPFS";
 
 const Carrier = () => {
   const [images, setImages] = React.useState([]);
@@ -111,125 +116,81 @@ const Carrier = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center text-center bg-custom-background">
-      {ipfs && (
-        <>
-          <h3 className="text-3xl font-bold text-custom-back">
-            IPFS Supply Chain Assurance Carrier
-          </h3>
-          <div className="flex items-start mb-6"> </div>
-
-          <div className="grid mb-2 md:grid-cols-3">
-            <div> </div>
-          </div>
-
-          <div className="flex items-start mb-6"></div>
-        </>
-      )}
-
+    <div className="flex flex-col justify-center text-center">
+      <Banner
+        role="Supplier"
+        text="Our platform offers suppliers the unique opportunity to register their carriers on a blockchain to ensure that all their transactions are carried out securely. Protect your assets and make sure you maintain a high level of security."
+        text2="Join the future of blockchain today and discover the ease and security our platform offers!"
+      />
       {images.map((image, index) => (
         <h3>Path:{image.path}</h3>
       ))}
 
       <h3>{cid}</h3>
 
-      <h1 className="text-xl font-semibold text-gray-700 text-center">
-        1. The carrier signs the photo
-      </h1>
-
-      <form className="m-4" onSubmit={handleSign}>
-        <textarea
-          required
-          type="text"
-          name="message"
-          className="textarea w-4/6 h-24 textarea-bordered focus:ring focus:outline-none"
-          placeholder="Message"
+      <Card className="w-1/2 self-center">
+        <Typography
+          text="Sign the photo by inserting the CID"
+          tag="h2"
+          className="text-left"
+        />
+        <Typography
+          text="By signing the photo you are accepting that you have received the good with status OK."
+          tag="h4"
+          className="text-left"
         />
 
-        <div className="flex items-start mb-6"> </div>
+        <form
+          onSubmit={handleSign}
+          className="flex flex-col self-center w-full mt-4"
+        >
+          <textarea
+            required
+            type="text"
+            name="message"
+            className="textarea w-4/6 h-24 textarea-bordered focus:ring focus:outline-none mb-2 self-center"
+            placeholder="Enter CID of the good to sign."
+          />
+          <Button type="submit" className="self-center">
+            Sign photo
+          </Button>
+          {error}
+        </form>
+      </Card>
+      <Card className="w-1/2 self-center mb-4">
+        <DownloadPhotoFromIPFS />
+      </Card>
 
-        <Button type="submit">Sign message</Button>
-        {error}
-      </form>
+      <Card className="w-1/2 self-center">
+        <Typography
+          text="Verification of the CID's authenticity"
+          tag="h2"
+          className="text-left"
+        />
 
-      <div className="grid grid-cols-3 gap-4" />
-      <div className="flex items-start mb-6"></div>
-
-      <br></br>
-
-      <br></br>
-
-      <div className="flex items-start mb-6"> </div>
-
-      <div className="hashing-form">
-        <h1 className="text-xl font-semibold text-gray-700 text-center">
-          2. Download photo from IPFS
-        </h1>
-
-        <div>
-          <div className="flex items-start mb-6"></div>
-        </div>
-        <div className="grid mb-2 md:grid-cols-3">
-          <div> </div>
-          <div>
-            <label
-              for="first_name"
-              className="block mb-2 text-sm font-medium text-gray-900 "
-            >
-              Download photo
-            </label>
-            <input
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5"
-              onChange={(e) => setBiddoc(e.target.value)}
-              placeholder="Input CID"
+        <Typography
+          text="This step is for showing the customer the photo was properly signed"
+          tag="h4"
+          className="text-left"
+        />
+        <form className="flex flex-col m-4" onSubmit={handleVerification}>
+          <div className="my-3">
+            <textarea
               required
+              type="text"
+              name="message"
+              className="textarea w-4/6 h-24 textarea-bordered focus:ring focus:outline-none"
+              placeholder="Message"
             />
           </div>
-          <div> </div>
-          <div> </div>
-          {biddoc && (
-            <div className="flex flex-wrap justify-center">
-              <img
-                alt="Bidding document"
-                src={"https://skywalker.infura-ipfs.io/ipfs/" + biddoc}
-                style={{ maxWidth: "400px", margin: "15px" }}
-                onError={(e) => {
-                  e.target.src =
-                    "https://skywalker.infura-ipfs.io/ipfs/QmYEGHkGxNut1zGGFiW6ERNgCcV5cwmXcpZgtT2NXUtGDP"; //replacement image imported above
-                  e.target.style = "padding: 8px; margin: 16px"; // inline styles in html format
-                }}
-              />
-            </div>
-          )}
-        </div>
+          <Button type="submit" className="self-center">
+            Show Verification
+          </Button>
+          {error}
 
-        <h1 className="text-xl font-semibold text-gray-700 text-center">
-          3.Verification of the CID's authenticity
-        </h1>
-        <form className="m-4" onSubmit={handleVerification}>
-          <div className="credit-card w-full shadow-lg mx-auto rounded-xl bg-white">
-            <main className="mt-4 p-4">
-              <div className="">
-                <div className="my-3">
-                  <textarea
-                    required
-                    type="text"
-                    name="message"
-                    className="textarea w-4/6 h-24 textarea-bordered focus:ring focus:outline-none"
-                    placeholder="Message"
-                  />
-                </div>
-              </div>
-            </main>
-            <footer className="p-4">
-              <Button type="submit">Verify</Button>
-              {error}
-            </footer>
-
-            <p>{validcid}</p>
-          </div>
+          <p>{validcid}</p>
         </form>
-      </div>
+      </Card>
     </div>
   );
 };
