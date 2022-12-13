@@ -24,7 +24,7 @@ const Input = ({
           id={label}
           {...rest}
           className={classNames(
-            "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5",
+            "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg border-1 focus:border-custom-secondary block w-4/5 p-2.5",
             className
           )}
           onFocus={(e) => {
@@ -37,8 +37,8 @@ const Input = ({
           <label
             htmlFor={label}
             className={classNames(
-              "absolute cursor-text left-20 top-1/2 transition-all transform -translate-y-1/2 duration-500 opacity-40 font-display text-xs",
-              focused || !value === false ? "left-2 top-2 text-xxs" : ""
+              "absolute cursor-text top-1/2 transition-all transform -translate-y-1/2 duration-500 opacity-40 font-display text-xs",
+              focused || !value === false ? "top-2 text-xxs" : ""
             )}
           >
             {label}

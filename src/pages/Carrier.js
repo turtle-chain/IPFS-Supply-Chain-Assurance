@@ -116,81 +116,85 @@ const Carrier = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center text-center">
-      <Banner
-        role="Supplier"
-        text="Our platform offers suppliers the unique opportunity to register their carriers on a blockchain to ensure that all their transactions are carried out securely. Protect your assets and make sure you maintain a high level of security."
-        text2="Join the future of blockchain today and discover the ease and security our platform offers!"
-      />
-      {images.map((image, index) => (
-        <h3>Path:{image.path}</h3>
-      ))}
-
-      <h3>{cid}</h3>
-
-      <Card className="w-1/2 self-center">
-        <Typography
-          text="Sign the photo by inserting the CID"
-          tag="h2"
-          className="text-left"
+    <div className="flex justify-center text-center h-full">
+      <div className="w-1/3">
+        <Banner
+          role="Carrier"
+          text="Our platform offers suppliers the unique opportunity to register their carriers on a blockchain to ensure that all their transactions are carried out securely. Protect your assets and make sure you maintain a high level of security."
+          text2="Join the future of blockchain today and discover the ease and security our platform offers!"
+          className="h-full justify-start pt-32"
         />
-        <Typography
-          text="By signing the photo you are accepting that you have received the good with status OK."
-          tag="h4"
-          className="text-left"
-        />
+      </div>
+      <div className="w-2/3 px-6">
+        {images.map((image, index) => (
+          <h3>Path:{image.path}</h3>
+        ))}
 
-        <form
-          onSubmit={handleSign}
-          className="flex flex-col self-center w-full mt-4"
-        >
-          <textarea
-            required
-            type="text"
-            name="message"
-            className="textarea w-4/6 h-24 textarea-bordered focus:ring focus:outline-none mb-2 self-center"
-            placeholder="Enter CID of the good to sign."
+        <h3>{cid}</h3>
+        <Card className=" self-center">
+          <Typography
+            text="Sign the photo by inserting the CID"
+            tag="h2"
+            className="text-left"
           />
-          <Button type="submit" className="self-center">
-            Sign photo
-          </Button>
-          {error}
-        </form>
-      </Card>
-      <Card className="w-1/2 self-center mb-4">
-        <DownloadPhotoFromIPFS />
-      </Card>
+          <Typography
+            text="By signing the photo you are accepting that you have received the good with status OK."
+            tag="h4"
+            className="text-left"
+          />
 
-      <Card className="w-1/2 self-center">
-        <Typography
-          text="Verification of the CID's authenticity"
-          tag="h2"
-          className="text-left"
-        />
-
-        <Typography
-          text="This step is for showing the customer the photo was properly signed"
-          tag="h4"
-          className="text-left"
-        />
-        <form className="flex flex-col m-4" onSubmit={handleVerification}>
-          <div className="my-3">
+          <form
+            onSubmit={handleSign}
+            className="flex flex-col self-center w-full mt-4"
+          >
             <textarea
               required
               type="text"
               name="message"
-              className="textarea w-4/6 h-24 textarea-bordered focus:ring focus:outline-none"
-              placeholder="Message"
+              className="textarea w-4/6 h-24 textarea-bordered focus:ring focus:outline-none mb-2 self-center"
+              placeholder="Enter CID of the good to sign."
             />
-          </div>
-          <Button type="submit" className="self-center">
-            Show Verification
-          </Button>
-          {error}
+            <Button type="submit" className="self-center">
+              Sign photo
+            </Button>
+            {error}
+          </form>
+        </Card>
+        <Card className="self-center mb-4">
+          <DownloadPhotoFromIPFS />
+        </Card>
 
-          <p>{validcid}</p>
-        </form>
-      </Card>
+        <Card className=" self-center">
+          <Typography
+            text="Verification of the CID's authenticity"
+            tag="h2"
+            className="text-left"
+          />
+
+          <Typography
+            text="This step is for showing the customer the photo was properly signed"
+            tag="h4"
+            className="text-left"
+          />
+          <form className="flex flex-col m-4" onSubmit={handleVerification}>
+            <div className="my-3">
+              <textarea
+                required
+                type="text"
+                name="message"
+                className="textarea w-4/6 h-24 textarea-bordered focus:ring focus:outline-none"
+                placeholder="Message"
+              />
+            </div>
+            <Button type="submit" className="self-center">
+              Show Verification
+            </Button>
+            {error}
+
+            <p>{validcid}</p>
+          </form>
+        </Card>
+      </div>
     </div>
   );
 };
