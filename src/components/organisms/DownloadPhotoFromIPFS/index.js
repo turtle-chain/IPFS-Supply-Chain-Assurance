@@ -7,11 +7,7 @@ const DownloadPhotoFromIPFS = () => {
   const [biddoc, setBiddoc] = React.useState("");
   return (
     <>
-      <Typography
-        text="Download photo from IPFS by inserting the CID"
-        tag="h2"
-        className="text-left"
-      />
+      <Typography text="Download the photo" tag="h2" className="text-left" />
 
       <Typography
         text="This step is for validating or viewing again the photo."

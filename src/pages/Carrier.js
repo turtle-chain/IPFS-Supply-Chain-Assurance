@@ -122,7 +122,7 @@ const Carrier = () => {
           role="Carrier"
           text="Our platform offers suppliers the unique opportunity to register their carriers on a blockchain to ensure that all their transactions are carried out securely. Protect your assets and make sure you maintain a high level of security."
           text2="Join the future of blockchain today and discover the ease and security our platform offers!"
-          className="h-full justify-start pt-32"
+          className="min-h-screen h-full justify-start pt-32"
         />
       </div>
       <div className="w-2/3 px-6">
@@ -132,11 +132,7 @@ const Carrier = () => {
 
         <h3>{cid}</h3>
         <Card className=" self-center">
-          <Typography
-            text="Sign the photo by inserting the CID"
-            tag="h2"
-            className="text-left"
-          />
+          <Typography text="Sign the photo" tag="h2" className="text-left" />
           <Typography
             text="By signing the photo you are accepting that you have received the good with status OK."
             tag="h4"
@@ -145,14 +141,14 @@ const Carrier = () => {
 
           <form
             onSubmit={handleSign}
-            className="flex flex-col self-center w-full mt-4"
+            className="flex flex-col self-center w-full "
           >
-            <textarea
-              required
-              type="text"
+            <Input
+              onChange={(e) => setBiddoc(e.target.value)}
+              placeholder="Insert CID"
               name="message"
-              className="textarea w-4/6 h-24 textarea-bordered focus:ring focus:outline-none mb-2 self-center"
-              placeholder="Enter CID of the good to sign."
+              required
+              className="w-4/5 self-center mt-2"
             />
             <Button type="submit" className="self-center">
               Sign photo
@@ -164,9 +160,9 @@ const Carrier = () => {
           <DownloadPhotoFromIPFS />
         </Card>
 
-        <Card className=" self-center">
+        <Card className=" self-center mb-5">
           <Typography
-            text="Verification of the CID's authenticity"
+            text="Verification of the authenticity"
             tag="h2"
             className="text-left"
           />
@@ -176,16 +172,14 @@ const Carrier = () => {
             tag="h4"
             className="text-left"
           />
-          <form className="flex flex-col m-4" onSubmit={handleVerification}>
-            <div className="my-3">
-              <textarea
-                required
-                type="text"
-                name="message"
-                className="textarea w-4/6 h-24 textarea-bordered focus:ring focus:outline-none"
-                placeholder="Message"
-              />
-            </div>
+          <form className="flex flex-col" onSubmit={handleVerification}>
+            <Input
+              onChange={(e) => setBiddoc(e.target.value)}
+              placeholder="Insert CID"
+              name="message"
+              required
+              className="w-4/5 self-center mt-2"
+            />
             <Button type="submit" className="self-center">
               Show Verification
             </Button>

@@ -91,13 +91,13 @@ const Supplier = () => {
           role="Supplier"
           text="Our platform offers suppliers the unique opportunity to register their carriers on a blockchain to ensure that all their transactions are carried out securely. Protect your assets and make sure you maintain a high level of security."
           text2="Join the future of blockchain today and discover the ease and security our platform offers!"
-          className="h-full justify-start pt-32"
+          className="min-h-screen h-full justify-start pt-32"
         />
       </div>
       <div className="w-2/3 px-6">
         <Card className="self-center">
           <Typography
-            text="Register the carrier by inserting his wallet adddress"
+            text="Register the carrier"
             tag="h2"
             className="text-left"
           />
@@ -122,7 +122,7 @@ const Supplier = () => {
 
         <Card className="self-center">
           <Typography
-            text="Upload the photo of the goods to be transported"
+            text="Upload the photo of the goods"
             tag="h2"
             className="text-left"
           />
