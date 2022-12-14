@@ -4,7 +4,6 @@ import Banner from "../components/molecules/Banner";
 import Input from "../components/atoms/Input";
 import Typography from "../components/atoms/Typography";
 import Card from "../components/molecules/Card";
-import { ipfs } from "../utils/ipfs";
 import { ethers } from "ethers";
 import SCA from "../artifacts/contracts/SCA.sol/SCA.json";
 import DownloadPhotoFromIPFS from "../components/organisms/DownloadPhotoFromIPFS";
@@ -90,9 +89,9 @@ const Carrier = () => {
       message: data.get("message"),
     });
     console.log("INPUT", data.get("message"));
-    if (sig) {
-      setSignatures(sig);
-    }
+    // if (sig) {
+    //   setSignatures(sig);
+    // }
 
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -162,7 +161,7 @@ const Carrier = () => {
 
         <Card className=" self-center mb-5">
           <Typography
-            text="Verification of the authenticity"
+            text="Verification of the sign"
             tag="h2"
             className="text-left"
           />

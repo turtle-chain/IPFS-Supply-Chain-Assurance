@@ -1,8 +1,6 @@
 import "./index.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import Button from "./components/atoms/Button";
-import Input from "./components/atoms/Input";
 import Supplier from "./pages/Supplier";
 import Carrier from "./pages/Carrier";
 import Customer from "./pages/Customer";
