@@ -7,6 +7,7 @@ import Card from "../components/molecules/Card";
 import { ethers } from "ethers";
 import SCA from "../artifacts/contracts/SCA.sol/SCA.json";
 import DownloadPhotoFromIPFS from "../components/organisms/DownloadPhotoFromIPFS";
+import QrReader from "react-qr-scanner";
 
 const Carrier = () => {
   const [images, setImages] = React.useState([]);
@@ -137,7 +138,15 @@ const Carrier = () => {
             tag="h4"
             className="text-left"
           />
-
+          <Typography text="Scan QR Code" tag="h3" className="text-bold py-2" />
+          <QrReader
+            // delay={this.state.delay}
+            // style={previewStyle}
+            className="h-44"
+            // onError={this.handleError}
+            // onScan={this.handleScan}
+          />
+          <Typography text="or Enter CID" tag="h3" className="text-bold py-2" />
           <form
             onSubmit={handleSign}
             className="flex flex-col self-center w-full "

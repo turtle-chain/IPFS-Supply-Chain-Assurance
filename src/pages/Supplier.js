@@ -8,6 +8,7 @@ import SCA from "../artifacts/contracts/SCA.sol/SCA.json";
 import Banner from "../components/molecules/Banner";
 import Typography from "../components/atoms/Typography";
 import DownloadPhotoFromIPFS from "../components/organisms/DownloadPhotoFromIPFS";
+import QRCode from "react-qr-code";
 
 const Supplier = () => {
   const [carrier, setCarrier] = React.useState([]);
@@ -153,9 +154,11 @@ const Supplier = () => {
               />
             ))}
           </div>
-
           {images.map((image, index) => (
-            <h3>CID:{image.path}</h3>
+            <div className="flex flex-col justify-center">
+              <h3>CID:{image.path}</h3>
+              <QRCode value={image.path} />
+            </div>
           ))}
 
           <h3>{cid}</h3>
