@@ -7,10 +7,13 @@ import Card from "../components/molecules/Card";
 import { ethers } from "ethers";
 import SCA from "../artifacts/contracts/SCA.sol/SCA.json";
 import DownloadPhotoFromIPFS from "../components/organisms/DownloadPhotoFromIPFS";
+import QrReader from "react-qr-scanner";
 
 const Carrier = () => {
   const [images, setImages] = React.useState([]);
   const [cid, setCid] = React.useState();
+  const [showScan, setShowScan] = React.useState(false);
+  const [showInsertCID, setShowInsertCID] = React.useState(false);
   const [error, setError] = React.useState();
   let [signedmesage, setSignedmesage] = React.useState("");
   const [biddoc, setBiddoc] = React.useState("");
@@ -51,6 +54,9 @@ const Carrier = () => {
       console.log("sig", sig);
       addValues(sig);
     }
+  };
+  const handleScan = async (e) => {
+    console.log("e", e);
   };
   //Carrier sign message
   const signMessage = async ({ setError, message }) => {
@@ -115,16 +121,16 @@ const Carrier = () => {
   };
 
   return (
-    <div className="flex justify-center text-center h-full">
-      <div className="w-1/3">
+    <div className="flex md:flex-row flex-col justify-center text-center h-full">
+      <div className="md:w-1/3 w-full bg-custom-primary md:min-h-screen">
         <Banner
           role="Carrier"
           text="Our platform offers suppliers the unique opportunity to register their carriers on a blockchain to ensure that all their transactions are carried out securely. Protect your assets and make sure you maintain a high level of security."
           text2="Join the future of blockchain today and discover the ease and security our platform offers!"
-          className="min-h-screen h-full justify-start pt-32"
+          className=" h-full justify-start"
         />
       </div>
-      <div className="w-2/3 px-6">
+      <div className="md:w-2/3 w-full px-6">
         {images.map((image, index) => (
           <h3>Path:{image.path}</h3>
         ))}
@@ -137,23 +143,54 @@ const Carrier = () => {
             tag="h4"
             className="text-left"
           />
+          <div className="flex justify-around md:p-4 md:mx-24">
+            <>
+              <Button onClick={() => setShowScan(!showScan)}>
+                <Typography
+                  text="Scan QR Code"
+                  tag="h3"
+                  className="text-bold"
+                />
+              </Button>
 
-          <form
-            onSubmit={handleSign}
-            className="flex flex-col self-center w-full "
-          >
-            <Input
-              onChange={(e) => setBiddoc(e.target.value)}
-              placeholder="Insert CID"
-              name="message"
-              required
-              className="w-4/5 self-center mt-2"
+              <Typography text="or" tag="h3" className="text-bold pt-2" />
+              <Button onClick={() => setShowInsertCID(!showInsertCID)}>
+                <Typography text="Enter CID" tag="h3" className="text-bold" />
+              </Button>
+            </>
+          </div>
+          {showScan ? (
+            <QrReader
+              className="h-44"
+              onScan={(e) => {
+                console.log("e", e);
+                if (e?.text) {
+                  setBiddoc(e.text);
+                  setShowScan(false);
+                  setShowInsertCID(true);
+                }
+              }}
             />
-            <Button type="submit" className="self-center">
-              Sign photo
-            </Button>
-            {error}
-          </form>
+          ) : null}
+          {showInsertCID ? (
+            <form
+              onSubmit={handleSign}
+              className="flex flex-col self-center w-full "
+            >
+              <Input
+                onChange={(e) => setBiddoc(e.target.value)}
+                placeholder="Insert CID"
+                name="message"
+                value={biddoc}
+                required
+                className="w-4/5 self-center mt-2"
+              />
+              <Button type="submit" className="self-center">
+                Sign photo
+              </Button>
+              {error}
+            </form>
+          ) : null}
         </Card>
         <Card className="self-center mb-4">
           <DownloadPhotoFromIPFS />
