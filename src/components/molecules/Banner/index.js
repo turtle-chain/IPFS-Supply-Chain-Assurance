@@ -7,7 +7,7 @@ const Banner = ({ role, text, text2, className }) => {
   return (
     <div
       className={classNames(
-        "flex flex-col align-middle place-content-center bg-custom-primary",
+        "flex flex-col md:align-middle md:place-content-center bg-custom-primary",
         className
       )}
     >
@@ -15,7 +15,7 @@ const Banner = ({ role, text, text2, className }) => {
       <Typography
         text={`👋 Hello ${role}`}
         tag="h1"
-        className="text-white text-center pt-2"
+        className="text-white text-center md:pt-2"
       />
       <Typography
         text="IPFS Supply Chain Assurance"
@@ -25,12 +25,12 @@ const Banner = ({ role, text, text2, className }) => {
       <Typography
         text={text}
         tag="h3"
-        className="w-4/5 self-center text-white p-2 "
+        className="md:w-4/5 w-full self-center text-white p-2 hidden md:block"
       />
       <Typography
         text={text2}
         tag="h3"
-        className="w-4/5 self-center text-white p-2 pb-6"
+        className="md:w-4/5 w-full self-center text-white p-6 hidden md:block"
       />
     </div>
   );

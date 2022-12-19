@@ -6,7 +6,7 @@ import MainLayout from "../components/organisms/MainLayout";
 const Customer = () => {
   return (
     <MainLayout>
-      <Card className="w-2/3 self-center mb-4 mx-6">
+      <Card className="md:w-2/3 w-full self-center mb-4 mx-6">
         <DownloadPhotoFromIPFS />
       </Card>
     </MainLayout>

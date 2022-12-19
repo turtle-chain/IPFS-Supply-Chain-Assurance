@@ -86,16 +86,16 @@ const Supplier = () => {
   if (!ipfs) return null;
 
   return (
-    <div className="flex justify-center text-center h-full">
-      <div className="w-1/3">
+    <div className="flex md:flex-row flex-col justify-center text-center h-full">
+      <div className="md:w-1/3 w-full bg-custom-primary md:min-h-screen">
         <Banner
           role="Supplier"
           text="Our platform offers suppliers the unique opportunity to register their carriers on a blockchain to ensure that all their transactions are carried out securely. Protect your assets and make sure you maintain a high level of security."
           text2="Join the future of blockchain today and discover the ease and security our platform offers!"
-          className="min-h-screen h-full justify-start pt-32"
+          className=" h-full justify-start"
         />
       </div>
-      <div className="w-2/3 px-6">
+      <div className="md:w-2/3 w-full px-6">
         <Card className="self-center">
           <Typography
             text="Register the carrier"
@@ -154,14 +154,21 @@ const Supplier = () => {
               />
             ))}
           </div>
-          {images.map((image, index) => (
-            <div className="flex flex-col justify-center">
-              <h3>CID:{image.path}</h3>
-              <QRCode value={image.path} />
-            </div>
-          ))}
+          {cid ? (
+            <>
+              {images.map((image, index) => (
+                <div className="flex flex-col justify-center">
+                  <h3>CID:{image.path}</h3>
+                  <QRCode
+                    value={image.path}
+                    className="self-center py-2 h-40"
+                  />
+                </div>
+              ))}
 
-          <h3>{cid}</h3>
+              <h3>{cid}</h3>
+            </>
+          ) : null}
         </Card>
 
         <Card className="self-center mb-4">
