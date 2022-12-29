@@ -61,7 +61,7 @@ const Supplier = () => {
 
   //Carrier's registration
   async function registerCarrierCust() {
-    console.log("register carreier", carrier);
+    console.log("register carrier", carrier);
     if (typeof window.ethereum !== "undefined") {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -74,10 +74,10 @@ const Supplier = () => {
       try {
         const transaction = await contract.register(carrier);
         await transaction.wait();
-        setRegok("Regisration OK");
+        setRegok("Registration OK");
         console.log("Registration OK");
       } catch (err) {
-        setRegok("Regisration failed");
+        setRegok("Registration failed");
         console.log("Error: ", err);
       }
     }
