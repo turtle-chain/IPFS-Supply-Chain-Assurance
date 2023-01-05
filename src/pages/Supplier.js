@@ -10,6 +10,7 @@ import Typography from "../components/atoms/Typography";
 import DownloadPhotoFromIPFS from "../components/organisms/DownloadPhotoFromIPFS";
 import QRCode from "react-qr-code";
 
+
 const Supplier = () => {
   const [carrier, setCarrier] = React.useState([]);
   const [biddoc, setBiddoc] = React.useState("");
@@ -76,6 +77,16 @@ const Supplier = () => {
         await transaction.wait();
         setRegok("Registration OK");
         console.log("Registration OK");
+   
+        const supplier = await contract.supplier();
+        console.log("Supplier: "+supplier);
+        
+        const totalEntries = await contract.totalEntries();
+        console.log("Totalentries: "+totalEntries);
+
+        let carriers = [totalEntries];
+        carriers = await contract.showCarrierList();
+        console.log("Carriers: "+carriers);
       } catch (err) {
         setRegok("Registration failed");
         console.log("Error: ", err);
