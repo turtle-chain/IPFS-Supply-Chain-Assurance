@@ -53,7 +53,7 @@ const Supplier = () => {
         await transaction.wait();
         setCid("File upload successfuly");
       } catch (err) {
-        console.log("Error: ", err);
+        console.log("Error uploading the file image: ", err);
       }
     }
 
