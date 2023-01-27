@@ -37,7 +37,7 @@ const Carrier = () => {
         signer
       );
       console.log(sig.signature, sig.message, sig.address);
-      const transaction = await contract.supply(sig.signature, sig.message);
+      const transaction = await contract.supply(sig.signature, sig.message,sig.address);
       await transaction.wait();
     }
   }
