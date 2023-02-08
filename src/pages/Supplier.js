@@ -17,6 +17,7 @@ const Supplier = () => {
   const [cid, setCid] = React.useState();
   let [regok, setRegok] = React.useState("");
   const [images, setImages] = React.useState([]);
+  const [carriers, setCarriers] = React.useState([]);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -30,7 +31,7 @@ const Supplier = () => {
     const file = files[0];
     // upload files
     const result = await ipfs.add(file);
-
+   
     setImages([
       ...images,
       {
@@ -59,6 +60,42 @@ const Supplier = () => {
 
     form.reset();
   };
+  async function getCarriers(){
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      process.env.REACT_APP_scaAddress,
+      SCA.abi,
+      signer
+    );
+    const totalEntries = await contract.totalEntries();
+    console.log("Totalentries: "+totalEntries);
+
+    let carriers = [totalEntries];
+    carriers = await contract.showCarrierList();
+    setCarriers(carriers);
+
+    for (const car of carriers){
+      console.log("Carrier: "+car);
+      console.log("*****");
+    };
+//SHOW CID_COUNT
+const counter = await contract.cid_count();
+console.log("The counter is: " + counter);
+// SHOW CID_COUNT
+
+//SHOW ALL PHOTOS
+for(var i=0; i < counter; i++) {
+  const allcid = await contract.showcid(i);
+  const deliv = await contract.showdeliv(i);
+  console.log('deliv ',deliv)
+  console.log('cid ',allcid)
+}
+  };  
+
+
+
+
 
   //Carrier's registration
   async function registerCarrierCust() {
@@ -80,16 +117,6 @@ const Supplier = () => {
    
         const supplier = await contract.supplier();
         console.log("Supplier: "+supplier);
-        
-        const totalEntries = await contract.totalEntries();
-        console.log("Totalentries: "+totalEntries);
-
-        let carriers = [totalEntries];
-        carriers = await contract.showCarrierList();
-        for (const car of carriers){
-          console.log("Carrier: "+car);
-          console.log("*****");
-        };
         
       } catch (err) {
         setRegok("Registration failed");
@@ -134,6 +161,24 @@ const Supplier = () => {
           <Button onClick={registerCarrierCust} className="w-32 self-center">
             Register
           </Button>
+        </Card>
+        <Card>
+        <Button onClick={getCarriers} className="w-32 self-center">
+            Get carriers
+          </Button>
+        {carriers ? (
+            <>
+              {carriers.map((c, index) => (
+                <div className="flex flex-col justify-center">
+                  <h3>Carrier: {c}</h3>
+
+                </div>
+              ))}
+
+              <h3>{cid}</h3>
+            </>
+          ) : null}
+
         </Card>
 
         <Card className="self-center">

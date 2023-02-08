@@ -12,19 +12,25 @@ contract SCA {
 
     //Only membership can view system data
     mapping(uint256 => address) public carriermember;
+    //Quantity of carriers
     uint public totalEntries;
+    uint256 public cid_count; //counter to increment id
 
-    mapping(string => Cert) cert;
+    mapping(string => Cert) certificates;
+    // For each id we obtain the Cid
+    mapping(uint256 => string) id_certificates;
+    // link between carriers and CIDS
+    mapping(uint256 => address) deliveries;
 
     modifier onlySupplier() {
         require(msg.sender == supplier);
         _;
     }
-    function isCarrier(address add) internal view returns (bool)
-    {
+
+    function isCarrier(address add) internal view returns (bool) {
         for (uint i = 0; i < totalEntries; i++) {
             if (carriermember[i] == add) {
-             return true;   
+                return true;
             }
         }
         return false;
@@ -33,7 +39,7 @@ contract SCA {
     modifier onlyCarrier() {
         for (uint i = 0; i < totalEntries; i++) {
             if (carriermember[i] == msg.sender) {
-             require(true);   
+                require(true);
             }
         }
         require(false);
@@ -60,35 +66,43 @@ contract SCA {
         return ret;
     }
 
-/*     function unregister(address payable Carrier) public onlySupplier {
+    /*     function unregister(address payable Carrier) public onlySupplier {
         carriermember[Carrier] = 0;
     } */
 
+    // supplier add CID
     function addcid(string memory Cid) public payable onlySupplier {
-        cert[Cid] = Cert({hashedcid: "0", regcid: 1});
+        certificates[Cid] = Cert({hashedcid: "", regcid: 1});
+        id_certificates[cid_count] = Cid;
     }
 
+    //Carrier add signature to cert
     function supply(
         string memory Hashcid,
-        string memory Cid
+        string memory Cid,
+        address _carrier // signature,message
     ) public payable onlyCarrier {
-        require(cert[Cid].regcid == 1, "supplier");
+        require(certificates[Cid].regcid == 1, "supplier");
+        //require(carriermember[_carrier] == 1, "registered");
 
-        cert[Cid] = Cert({hashedcid: Hashcid, regcid: 1});
+        certificates[Cid] = Cert({hashedcid: Hashcid, regcid: 1});
+
+        deliveries[cid_count] = _carrier;
+
+        cid_count = cid_count + 1;
     }
 
-    // verify cid/signature
     function show(
         string memory Cid,
         string memory cidverify
     ) public view returns (bool) {
         return (keccak256(abi.encodePacked((cidverify))) ==
-            keccak256(abi.encodePacked((cert[Cid].hashedcid))));
+            keccak256(abi.encodePacked((certificates[Cid].hashedcid))));
     }
 
-    function showhash(string memory Cid) public view returns (string memory) {
+    /*     function showhash(string memory Cid) public view returns (string memory) {
         return (cert[Cid].hashedcid);
-    }
+    } */
 
     function getRole(address user) public view returns (string memory) {
         if (user == supplier) {
@@ -99,7 +113,7 @@ contract SCA {
             return "2";
         }
     }
-/*     function showcarrier() public view returns (bool) {
+    /*     function showcarrier() public view returns (bool) {
         return (carriermember[msg.sender]) == 1;
     } */
 }
