@@ -86,7 +86,11 @@ const Supplier = () => {
 
         let carriers = [totalEntries];
         carriers = await contract.showCarrierList();
-        console.log("Carriers: "+carriers);
+        for (const car of carriers){
+          console.log("Carrier: "+car);
+          console.log("*****");
+        };
+        
       } catch (err) {
         setRegok("Registration failed");
         console.log("Error: ", err);
