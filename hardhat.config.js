@@ -33,8 +33,11 @@ module.exports = {
   },
   networks: {
     hardhat: {
+      gas: 12000000,
+      allowUnlimitedContractSize: true,
       chainId: 1337,
     },
+
     // ropsten: {
     //   url: "https://ropsten.infura.io/v3/projectid",
     //   accounts: [process.env.a2key]
@@ -44,11 +47,36 @@ module.exports = {
     //   accounts: [process.env.a2key]
     // }
   },
+
   solidity: "0.8.9",
 };
 
 
 
+module.exports = {
+  defaultNetwork: "localhost",
+  paths: {
+    artifacts: './src/artifacts',
+  },
+  networks: {
+    hardhat: {
+      gas: 12000000,
+      allowUnlimitedContractSize: true,
+      chainId: 1337,
+    },
+
+    // ropsten: {
+    //   url: "https://ropsten.infura.io/v3/projectid",
+    //   accounts: [process.env.a2key]
+    // },
+    // rinkeby: {
+    //   url: "https://rinkeby.infura.io/v3/projectid",
+    //   accounts: [process.env.a2key]
+    // }
+  },
+
+  solidity: "0.8.9",
+};
 
 
 

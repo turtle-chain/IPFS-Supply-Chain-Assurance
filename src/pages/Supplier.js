@@ -79,18 +79,18 @@ const Supplier = () => {
       console.log("Carrier: "+car);
       console.log("*****");
     };
-//SHOW CID_COUNT
-const counter = await contract.cid_count();
-console.log("The counter is: " + counter);
-// SHOW CID_COUNT
+    //SHOW CID_COUNT
+    const counter = await contract.cid_count();
+    console.log("The counter is: " + counter);
+    // SHOW CID_COUNT
 
-//SHOW ALL PHOTOS
-for(var i=0; i < counter; i++) {
-  const allcid = await contract.showcid(i);
-  const deliv = await contract.showdeliv(i);
-  console.log('deliv ',deliv)
-  console.log('cid ',allcid)
-}
+    //SHOW ALL PHOTOS
+    for (var i = 0; i < counter; i++) {
+      const allcid = await contract.showcid(i);
+      const deliv = await contract.showdeliv(i);
+      console.log('deliv ', deliv)
+      console.log('cid ', allcid)
+    }
   };  
 
 

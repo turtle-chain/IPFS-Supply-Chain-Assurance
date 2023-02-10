@@ -6,8 +6,8 @@ contract SCA {
     address public supplier;
 
     struct Cert {
-        string hashedcid;
-        uint256 regcid;
+        string hashedcid; // signature of CID
+        uint256 regcid; // 1: registry added by supplier
     }
 
     //Only membership can view system data
@@ -72,6 +72,7 @@ contract SCA {
 
     // supplier add CID
     function addcid(string memory Cid) public payable onlySupplier {
+        //mapping(uint256 => string) id_certificates;
         certificates[Cid] = Cert({hashedcid: "", regcid: 1});
         id_certificates[cid_count] = Cid;
     }
@@ -83,7 +84,7 @@ contract SCA {
         address _carrier // signature,message
     ) public payable onlyCarrier {
         require(certificates[Cid].regcid == 1, "supplier");
-        //require(carriermember[_carrier] == 1, "registered");
+        //require(carriermember[_carrier]== 1, "registered");
 
         certificates[Cid] = Cert({hashedcid: Hashcid, regcid: 1});
 

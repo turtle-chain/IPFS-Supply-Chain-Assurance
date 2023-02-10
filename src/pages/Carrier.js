@@ -36,8 +36,8 @@ const Carrier = () => {
         SCA.abi,
         signer
       );
-      console.log(sig.signature, sig.message, sig.address);
-      const transaction = await contract.supply(sig.signature, sig.message);
+      console.log("sign "+sig.signature, "message "+sig.message, "address "+sig.address);
+      const transaction = await contract.supply(sig.signature, sig.message,sig.address);
       await transaction.wait();
     }
   }
@@ -67,11 +67,12 @@ const Carrier = () => {
       await window.ethereum.send("eth_requestAccounts");
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
+      console.log("SIGNER: ", signer);
       const signature = await signer.signMessage(message);
       setSignedmesage(signature);
-      console.log("SIGNATURE:", signedmesage);
+      console.log("SIGNATURE: ", signedmesage);
       const address = await signer.getAddress();
-      console.log("ADDRESS:", address);
+      console.log("ADDRESS: ", address);
       signedmesage = signature;
 
       return {
