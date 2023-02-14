@@ -7,13 +7,11 @@ import { ethers } from "ethers";
 import SCA from "../artifacts/contracts/SCA.sol/SCA.json";
 import Banner from "../components/molecules/Banner";
 import Typography from "../components/atoms/Typography";
-import DownloadPhotoFromIPFS from "../components/organisms/DownloadPhotoFromIPFS";
 import QRCode from "react-qr-code";
 import HistoricalInfo from "../components/organisms/HistoricalInfo";
 
 const Supplier = () => {
   const [carrier, setCarrier] = React.useState([]);
-  const [biddoc, setBiddoc] = React.useState("");
   const [cid, setCid] = React.useState();
   let [regok, setRegok] = React.useState("");
   const [images, setImages] = React.useState([]);
@@ -69,13 +67,11 @@ const Supplier = () => {
 
   //Carrier's registration
   async function registerCarrierCust() {
-    console.log("register carrier", carrier);
     if (typeof window.ethereum !== "undefined") {
       try {
         const transaction = await contract.register(carrier);
         await transaction.wait();
         setRegok("Registration OK");
-        console.log("Registration OK");
       } catch (err) {
         setRegok("Registration failed");
         console.log("Error: ", err);
@@ -171,9 +167,9 @@ const Supplier = () => {
           ) : null}
         </Card>
 
-        <Card className="self-center mb-4">
+        {/* <Card className="self-center mb-4">
           <DownloadPhotoFromIPFS />
-        </Card>
+        </Card> */}
 
         <Card className="self-center mb-4">
           <HistoricalInfo contract={contract} />

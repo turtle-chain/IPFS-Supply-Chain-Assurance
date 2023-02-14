@@ -17,7 +17,6 @@ const Carrier = () => {
   const [error, setError] = React.useState();
   let [signedmesage, setSignedmesage] = React.useState("");
   const [biddoc, setBiddoc] = React.useState("");
-  const [signatures, setSignatures] = React.useState();
   let [validcid, setValidcid] = React.useState("");
 
   // request access to the user's MetaMask account
@@ -26,7 +25,6 @@ const Carrier = () => {
   }
 
   async function addValues(sig) {
-    console.log("entra a addvalues");
     if (typeof window.ethereum !== "undefined") {
       await requestAccount();
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -36,8 +34,11 @@ const Carrier = () => {
         SCA.abi,
         signer
       );
-      console.log(sig.signature, sig.message, sig.address);
-      const transaction = await contract.supply(sig.signature, sig.message,sig.address);
+      const transaction = await contract.supply(
+        sig.signature,
+        sig.message,
+        sig.address
+      );
       await transaction.wait();
     }
   }
@@ -51,12 +52,8 @@ const Carrier = () => {
       message: data.get("message"),
     });
     if (sig) {
-      console.log("sig", sig);
       addValues(sig);
     }
-  };
-  const handleScan = async (e) => {
-    console.log("e", e);
   };
   //Carrier sign message
   const signMessage = async ({ setError, message }) => {
@@ -69,9 +66,7 @@ const Carrier = () => {
       const signer = provider.getSigner();
       const signature = await signer.signMessage(message);
       setSignedmesage(signature);
-      console.log("SIGNATURE:", signedmesage);
       const address = await signer.getAddress();
-      console.log("ADDRESS:", address);
       signedmesage = signature;
 
       return {
@@ -87,14 +82,11 @@ const Carrier = () => {
     e.preventDefault();
 
     const data = new FormData(e.target);
-    console.log(data);
-    console.log(e.target);
     setError();
     const sig = await signMessage({
       setError,
       message: data.get("message"),
     });
-    console.log("INPUT", data.get("message"));
     // if (sig) {
     //   setSignatures(sig);
     // }
@@ -108,8 +100,7 @@ const Carrier = () => {
       );
       try {
         const data = await contract.show(sig.message, sig.signature);
-        console.log("data: ", data);
-        if (data == true) {
+        if (data === true) {
           setValidcid("CID OK");
         } else {
           setValidcid("CID Incorrect");

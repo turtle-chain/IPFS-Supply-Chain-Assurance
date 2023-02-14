@@ -20,7 +20,6 @@ const HistoricalInfo = ({ contract }) => {
       for (var i = 0; i < counter; i++) {
         const cid = await contract.showcid(i);
         const deliv = await contract.showdeliv(i);
-        console.log("cide", cid);
         cids.push(cid);
         delivs.push(deliv);
       }
@@ -31,25 +30,23 @@ const HistoricalInfo = ({ contract }) => {
     getData();
   }, []);
 
-  console.log("cid", allCid);
-  console.log("deliv", allDeliv);
-
   return (
     <>
       <Typography
         tag="h2"
-        text="Historical Transactions"
+        text="Historical Signed Transactions"
         className="text-left"
       />
       <div className="flex flex-wrap">
         {allCid.map((cid, index) => (
-          <Card className="flex flex-col bg-slate-300 mr-4 align-baseline justify-start ">
+          <Card className="flex flex-col bg-slate-300 mr-4 justify-center ">
             <Typography
               tag="h4"
               text={allDeliv[index].slice(0, 20) + "..."}
               className="w-20 "
             />
             <img
+              className=""
               alt="Bidding document"
               src={"https://skywalker.infura-ipfs.io/ipfs/" + cid}
               style={{ maxWidth: "150px", margin: "15px" }}
