@@ -27,22 +27,7 @@ function App() {
         const address = await signer.getAddress();
         const contract = new ethers.Contract(scaAddress, SCA.abi, signer);
         const contractRole = await contract.getRole(address);
-        // TEST
-        const showcarrier = await contract.showcarrier(address);
-        console.log('carrier',showcarrier)
-//SHOW CID_COUNT
-        const counter = await contract.cid_count();
-        console.log("The counter is: " + counter);
-// SHOW CID_COUNT
-
-//SHOW ALL PHOTOS
-        for(var i=0; i < counter; i++) {
-          const allcid = await contract.showcid(i);
-          const deliv = await contract.showdeliv(i);
-          console.log('deliv',deliv)
-          console.log('cid',allcid)
-  }
-//SHOW ALL PHOTOS
+        
 
         if (contractRole === "0") {
           setRole("Supplier");
