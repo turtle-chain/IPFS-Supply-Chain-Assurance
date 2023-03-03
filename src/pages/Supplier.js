@@ -7,15 +7,28 @@ import { ethers } from "ethers";
 import SCA from "../artifacts/contracts/SCA.sol/SCA.json";
 import Banner from "../components/molecules/Banner";
 import Typography from "../components/atoms/Typography";
-import DownloadPhotoFromIPFS from "../components/organisms/DownloadPhotoFromIPFS";
 import QRCode from "react-qr-code";
+import HistoricalInfo from "../components/organisms/HistoricalInfo";
 
 const Supplier = () => {
   const [carrier, setCarrier] = React.useState([]);
-  const [biddoc, setBiddoc] = React.useState("");
   const [cid, setCid] = React.useState();
   let [regok, setRegok] = React.useState("");
   const [images, setImages] = React.useState([]);
+
+  const contract = React.useMemo(() => {
+    let contract;
+    if (typeof window.ethereum !== "undefined") {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      contract = new ethers.Contract(
+        process.env.REACT_APP_scaAddress,
+        SCA.abi,
+        signer
+      );
+    }
+    return contract;
+  }, []);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -40,13 +53,6 @@ const Supplier = () => {
 
     //add cid to smart contract
     if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        process.env.REACT_APP_scaAddress,
-        SCA.abi,
-        signer
-      );
       try {
         const transaction = await contract.addcid(result.path);
         await transaction.wait();
@@ -61,21 +67,11 @@ const Supplier = () => {
 
   //Carrier's registration
   async function registerCarrierCust() {
-    console.log("register carrier", carrier);
     if (typeof window.ethereum !== "undefined") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        process.env.REACT_APP_scaAddress,
-        SCA.abi,
-        signer
-      );
-
       try {
         const transaction = await contract.register(carrier);
         await transaction.wait();
         setRegok("Registration OK");
-        console.log("Registration OK");
       } catch (err) {
         setRegok("Registration failed");
         console.log("Error: ", err);
@@ -171,8 +167,12 @@ const Supplier = () => {
           ) : null}
         </Card>
 
-        <Card className="self-center mb-4">
+        {/* <Card className="self-center mb-4">
           <DownloadPhotoFromIPFS />
+        </Card> */}
+
+        <Card className="self-center mb-4">
+          <HistoricalInfo contract={contract} />
         </Card>
       </div>
     </div>

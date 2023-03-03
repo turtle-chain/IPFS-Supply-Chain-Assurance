@@ -27,6 +27,7 @@ function App() {
         const address = await signer.getAddress();
         const contract = new ethers.Contract(scaAddress, SCA.abi, signer);
         const contractRole = await contract.getRole(address);
+        
 
         if (contractRole === "0") {
           setRole("Supplier");
