@@ -10,29 +10,31 @@ In order to access to the system, users must identify themselves with their meta
 
 1. The supplier (the owner's site) register the carrier in the system.
    
-   ![Example](assets/Registration.jpg)
+   ![Example](assets/carrier_registration.jpg)
 
 2. The supplier registered upload the photo of the goods to be transported,and obtain an ipfs ID.
 
-    ![Example](assets/fileupload.jpg)
+    ![Example](assets/upload_photo.jpg)
 
 3. The registered carrier log into the system with his metamask wallet. 
    The carrier signs the CID given by the supplier.
 
-    ![Example](assets/CarrierSign.jpg)
+    ![Example](assets/photo_sign.jpg)
 
 4. Everyone are able to download the photo from IPFS
 
-    ![Example](assets/Download.jpg)
+    ![Example](assets/photo_download.jpg)
 
 5. In case of dispute, due to customer disagreement regarding the goods received, it can be verified if
    the photo is the one taken at the time of loading the goods to the transport, or it's false. In order to
    do this verification, the customer may ask the carrier to sign the CID of the photo that is being delivered.
    The Dapp will display a 'CID OK' or 'incorrect CID' as appropiate. 
 
-    ![Example](assets/cidok.jpg)      ![Example](assets/cidnk.jpg)
+    ![Example](assets/photo_verification.jpg)
 
+6. The system's owner (supplier) can visualize all the uploaded photos, with their correspondent carriers.
 
+    ![Example](assets/hist_sign_trans.jpg)
 
 
 In order to run the system in local mode, the steps are as follow:
