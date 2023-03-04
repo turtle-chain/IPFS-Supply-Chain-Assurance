@@ -10,7 +10,7 @@ In order to access to the system, users must identify themselves with their meta
 
 1. The supplier (the owner's site) register the carrier in the system.
    
-   ![Example](assets/carrier_registration.jpg)
+   ![Example](assets/carrier_registration.JPG)
 
 2. The supplier registered upload the photo of the goods to be transported,and obtain an ipfs ID.
 
