@@ -37,6 +37,8 @@ module.exports = {
   defaultNetwork: "matic",
   networks: {
     hardhat: {
+      chainId: 1337,
+      allowUnlimitedContractSize: true
     },
     polygon_mumbai: {
       url: "https://rpc-mumbai.maticvigil.com",
@@ -56,43 +58,6 @@ module.exports = {
     }
   },
 }
-
-//module.exports = {
-  //solidity: "0.8.9",
-  //defaultNetwork: "hardhat",
-  //paths: {
-   // artifacts: './src/artifacts',
-   //defaultNetwork: "hyperspace",
-  //},
-  //networks: {
-    //hyperspace: {
-      //chainId: 3141,
-      //url: "https://api.hyperspace.node.glif.io/rpc/v1",
-      //accounts: [process.env.PRIVATE_KEY],
-  //},
-    //hardhat: {
-      //chainId: 1337,
-    //},
-    //goerli: {
-      //url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
-      //accounts : [GOERLI_PRIVATE_KEY]
-   // }
-    // ropsten: {
-    //   url: "https://ropsten.infura.io/v3/projectid",
-    //   accounts: [process.env.a2key]
-    // },
-     //rinkeby: {
-       //url: "https://rinkeby.infura.io/v3/2DxpAMDUxnEwmX2dp5U3YrLjlRZ",
-       //accounts: [process.env.a2key]
-    // }
-  //},
-//} 
-//};
-
-
-
-
-
 
 
 // This is an original version

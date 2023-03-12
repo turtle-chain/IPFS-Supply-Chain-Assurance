@@ -65,13 +65,17 @@ npx hardhat run --network localhost scripts/deploy.js
 7. Start a server to run the DAPP in local mode:
 ```bash
 npm start
-``` 
+```
+ -- Pay attention to the direction of the smart contract in the App.js and the pages in the pages directory. 
 
 8. The first account given by hardhat node corresponding to the supplier. 
    You have to register Account 0, 1 and 2 in your Metamask wallet. Then, you
    can use Account 1 to register the carrier in the Dapp, and Account 2 to the customer.
  
-
-
+9. Deploy the smart to mumbai testnet:
+```bash
+npx hardhat run scripts/deploy.js --network polygon_mumbai
+``` 
+--Pay attention to the direction of the smart contract in the App.js and the pages in the pages directory.
 
 
