@@ -13,7 +13,8 @@ import SCA from "./artifacts/contracts/SCA.sol/SCA.json";
 
 function App() {
   let [role, setRole] = useState("");
-  const scaAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  //const scaAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  const scaAddress = "0x8787C1F9353c945fD1B79a6565F3e44aa236B137";
 
   useEffect(() => {
     async function fetchData() {
