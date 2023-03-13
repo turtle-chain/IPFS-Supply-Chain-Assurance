@@ -78,4 +78,4 @@ npx hardhat run scripts/deploy.js --network polygon_mumbai
 ``` 
 --Pay attention to the direction of the smart contract in the App.js and the pages in the pages directory.
 
-
+Live Demo: https://ipfs-supply-chain-assurance-4ky3.vercel.app/
